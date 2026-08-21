@@ -1,3 +1,5 @@
+using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Infraestrutura;
+
 namespace GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura;
 
 public static class InjecaoDeDependencia
@@ -13,6 +15,6 @@ public static class InjecaoDeDependencia
             return contexto;
         });
 
-        //Adicionar Repositorios
+        services.AddScoped<RepositorioFabricanteEmArquivo>();
     }
 }
