@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
 
 public class ContextoJson
@@ -7,6 +8,7 @@ public class ContextoJson
     private readonly string caminhoArquivoDados;
 
     public List<Fabricante> Fabricantes { get; set; } = new List<Fabricante>();
+    public List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
 
     public ContextoJson()
     {
@@ -62,6 +64,7 @@ public class ContextoJson
     private void Carregar(ContextoJson contexto)
     {
         Fabricantes = contexto.Fabricantes;
+        Equipamentos = contexto.Equipamentos;
     }
 
     public ContextoJson CarregarDadosPredefinidos()
