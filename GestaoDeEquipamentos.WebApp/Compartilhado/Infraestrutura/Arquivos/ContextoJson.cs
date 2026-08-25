@@ -80,11 +80,18 @@ public class ContextoJson
             new Fabricante("PrimeData Sistemas Ltda.", "suporte@primedata.com.br", "(51) 3123-4505") { Id = 5 }
         });
 
+        contextoPredefinido.Equipamentos.AddRange(new List<Equipamento>
+        {
+            new Equipamento("Notebook Dell", 2000m, DateTime.Parse("03/03/2022"), contextoPredefinido.Fabricantes[0]) { Id = 1 },
+            new Equipamento("Monitor LG", 450m, DateTime.Parse("23/11/2024"), contextoPredefinido.Fabricantes[1]) { Id = 2 },
+
+        });
+
         return contextoPredefinido;
     }
 
     private bool PossuiDados()
     {
-        return Fabricantes.Count > 0;
+        return Fabricantes.Count > 0 && Equipamentos.Count > 0;
     }
 }
