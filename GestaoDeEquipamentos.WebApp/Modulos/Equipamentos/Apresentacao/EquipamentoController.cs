@@ -1,3 +1,4 @@
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;

@@ -1,3 +1,4 @@
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Infraestrutura;
 
@@ -18,5 +19,6 @@ public static class InjecaoDeDependencia
 
         services.AddScoped<RepositorioFabricanteEmArquivo>();
         services.AddScoped<RepositorioEquipamentoEmArquivo>();
+        services.AddScoped<RepositorioChamadosEmArquivo>();
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
 
@@ -9,6 +10,7 @@ public class ContextoJson
 
     public List<Fabricante> Fabricantes { get; set; } = new List<Fabricante>();
     public List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
+    public List<Chamado> Chamados { get; set; } = new List<Chamado>();
 
     public ContextoJson()
     {
@@ -65,6 +67,7 @@ public class ContextoJson
     {
         Fabricantes = contexto.Fabricantes;
         Equipamentos = contexto.Equipamentos;
+        Chamados = contexto.Chamados;
     }
 
     public ContextoJson CarregarDadosPredefinidos()
