@@ -32,11 +32,14 @@ else
                         </div>
 
                         <dl class="row mb-2">
-                            <dt class="col-sm-5">Descrição</dt>
-                            <dd class="col-sm-9">@chamado.Descricao</dd>
-
-                            <dt class="col-sm-5">Abertura</dt>
-                            <dd class="col-sm-7">@chamado.DataAbertura.ToShortDateString()</dd>
+                            <dt class="col-sm-7">Equipamento</dt>
+                            <dd class="col-sm-9">@chamado.NomeEquipamento</dd>
+                            <dt class="col-sm-5">Abertura:</dt>
+                            <dd class="col-sm-7">@chamado.DataAbertura.ToString("dd/MM/yyyy  HH:mm")</dd>
+                            <span class="text-muted small">
+                                Aberto a <strong class="text-danger fw-bold">@((DateTime.Today -
+                                                                chamado.DataAbertura.Date).Days)</strong> dia(s).
+                            </span>
                         </dl>
 
                         <div class="d-flex gap-2 justify-content-end mt-auto">

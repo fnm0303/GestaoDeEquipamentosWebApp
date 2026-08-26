@@ -7,7 +7,7 @@ public sealed class Chamado : EntidadeBase
 {
     public string Titulo { get; set; } = string.Empty;
     public string Descricao { get; set; } = string.Empty;
-    public DateTime DataAbertura { get; set; }
+    public DateTime DataAbertura { get; set; } = DateTime.Now;
     public Equipamento Equipamento { get; set; } = null!;
 
     public Chamado() { }

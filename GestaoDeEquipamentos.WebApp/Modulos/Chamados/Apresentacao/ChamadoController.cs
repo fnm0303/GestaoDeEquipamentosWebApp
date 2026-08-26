@@ -1,5 +1,7 @@
 using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Dominio;
 using GestaoDeEquipamentos.WebApp.Modulos.Chamados.Infraestrutura;
+using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Dominio;
+using GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Infraestrutura;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoDeEquipamentos.WebApp.Modulos.Chamados.Apresentacao;
@@ -7,10 +9,12 @@ namespace GestaoDeEquipamentos.WebApp.Modulos.Chamados.Apresentacao;
 public sealed class ChamadoController : Controller
 {
     private readonly RepositorioChamadosEmArquivo repositorioChamado;
+    private readonly RepositorioEquipamentoEmArquivo repositorioEquipamento;
 
-    public ChamadoController(RepositorioChamadosEmArquivo repositorioChamado)
+    public ChamadoController(RepositorioChamadosEmArquivo repositorioChamado, RepositorioEquipamentoEmArquivo repositorioEquipamento)
     {
         this.repositorioChamado = repositorioChamado;
+        this.repositorioEquipamento = repositorioEquipamento;
     }
 
     [HttpGet]
@@ -33,4 +37,64 @@ public sealed class ChamadoController : Controller
 
         return View(viewModels);
     }
+
+    [HttpGet]
+    public ActionResult Cadastrar()
+    {
+        CadastrarChamadoViewModel viewModel = new(
+            null,
+            null,
+            DateTime.Now,
+            0,
+            ObterEquipamentosDisponiveis()
+        );
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public ActionResult Cadastrar(CadastrarChamadoViewModel viewModel)
+    {
+        Equipamento? equipamentoSelecionado =
+            repositorioEquipamento.SelecionarPorId(viewModel.EquipamentoId);
+
+        if (equipamentoSelecionado == null)
+            ModelState.AddModelError(nameof(viewModel.EquipamentoId), "Selecione um equipamento válido");
+
+        if (!ModelState.IsValid)
+        {
+            viewModel = viewModel with
+            {
+                EquipamentosDisponiveis = ObterEquipamentosDisponiveis()
+            };
+
+            return View(viewModel);
+        }
+
+        Chamado chamado = new(
+            viewModel.Titulo ?? string.Empty,
+            viewModel.Descricao ?? string.Empty,
+            viewModel.DataAbertura ?? DateTime.Now,
+            equipamentoSelecionado!
+        );
+
+        repositorioChamado.Cadastrar(chamado);
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    private List<SelecionarEquipamentoViewModel> ObterEquipamentosDisponiveis()
+    {
+        List<SelecionarEquipamentoViewModel> viewModels = new();
+
+        foreach (Equipamento e in repositorioEquipamento.SelecionarTodos())
+        {
+            SelecionarEquipamentoViewModel viewModel = new(e.Id, e.Nome);
+
+            viewModels.Add(viewModel);
+        }
+
+        return viewModels;
+    }
+
 }
