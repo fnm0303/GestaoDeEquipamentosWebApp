@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using GestaoDeEquipamentos.WebApp.Modulos.Fabricantes.Dominio;
 
 namespace GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Apresentacao;
 
