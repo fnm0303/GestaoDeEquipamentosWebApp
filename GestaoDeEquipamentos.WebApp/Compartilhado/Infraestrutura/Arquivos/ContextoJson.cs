@@ -95,6 +95,6 @@ public class ContextoJson
 
     private bool PossuiDados()
     {
-        return Fabricantes.Count > 0 && Equipamentos.Count > 0;
+        return Fabricantes.Count > 0 && Equipamentos.Count > 0 && Chamados.Count > 0;
     }
 }
