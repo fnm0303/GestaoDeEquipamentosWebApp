@@ -1,5 +1,7 @@
 # Gestão de Equipamentos Web
 
+![Tela Inicial do Sistema](wwwroot/img/tela_inicial.png)
+
 ## Projeto
 
 Desenvolvido durante o curso Backend da [Academia do Programador](https://www.academiadoprogramador.net) 2026
