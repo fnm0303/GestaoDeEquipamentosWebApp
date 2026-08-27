@@ -142,6 +142,33 @@ public sealed class ChamadoController : Controller
         return RedirectToAction(nameof(Listar));
     }
 
+    [HttpGet]
+    public ActionResult Excluir(int id)
+    {
+        Chamado? chamadoSelecionado = repositorioChamado.SelecionarPorId(id);
+
+        if (chamadoSelecionado == null)
+            return NotFound();
+
+        ExcluirChamadoViewModel viewModel = new(
+            chamadoSelecionado.Id,
+            chamadoSelecionado.Titulo
+        );
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirChamadoViewModel viewModel)
+    {
+        bool conseguiuExcluir = repositorioChamado.Excluir(viewModel.Id);
+
+        if (!conseguiuExcluir)
+            return NotFound();
+
+        return RedirectToAction(nameof(Listar));
+    }
+
     private List<SelecionarEquipamentoViewModel> ObterEquipamentosDisponiveis()
     {
         List<SelecionarEquipamentoViewModel> viewModels = new();

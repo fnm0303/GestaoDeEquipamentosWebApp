@@ -42,3 +42,8 @@ public record EditarChamadoViewModel(
 
     List<SelecionarEquipamentoViewModel>? EquipamentosDisponiveis
 );
+
+public record ExcluirChamadoViewModel(
+    int Id,
+    string Titulo
+);
