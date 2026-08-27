@@ -83,6 +83,65 @@ public sealed class ChamadoController : Controller
         return RedirectToAction(nameof(Listar));
     }
 
+    [HttpGet]
+    public ActionResult Editar(int id)
+    {
+        Chamado? chamadoSelecionado = repositorioChamado.SelecionarPorId(id);
+
+        if (chamadoSelecionado == null)
+            return NotFound();
+
+        EditarChamadoViewModel viewModel = new(
+            chamadoSelecionado.Id,
+            chamadoSelecionado.Titulo,
+            chamadoSelecionado.Descricao,
+            chamadoSelecionado.Equipamento.Id,
+            ObterEquipamentosDisponiveis()
+        );
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(int id, EditarChamadoViewModel viewModel)
+    {
+        Chamado? chamadoOriginal = repositorioChamado.SelecionarPorId(id);
+
+        if (chamadoOriginal == null)
+            return NotFound();
+
+        Equipamento? equipamentoSelecionado =
+            repositorioEquipamento.SelecionarPorId(viewModel.EquipamentoId);
+
+        if (equipamentoSelecionado == null)
+            ModelState.AddModelError(nameof(viewModel.EquipamentoId), "Selecione um equipamento válido.");
+
+        if (!ModelState.IsValid)
+        {
+            ViewBag.DataAberturaOriginal = chamadoOriginal.DataAbertura;
+            viewModel = viewModel with
+            {
+                EquipamentosDisponiveis = ObterEquipamentosDisponiveis()
+            };
+
+            return View(viewModel);
+        }
+
+        Chamado chamadoAtualizado = new(
+            viewModel.Titulo ?? string.Empty,
+            viewModel.Descricao ?? string.Empty,
+            chamadoOriginal.DataAbertura,
+            equipamentoSelecionado!
+        );
+
+        bool conseguiuEditar = repositorioChamado.Editar(id, chamadoAtualizado);
+
+        if (!conseguiuEditar)
+            return NotFound();
+
+        return RedirectToAction(nameof(Listar));
+    }
+
     private List<SelecionarEquipamentoViewModel> ObterEquipamentosDisponiveis()
     {
         List<SelecionarEquipamentoViewModel> viewModels = new();

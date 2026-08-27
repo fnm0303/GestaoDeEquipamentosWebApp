@@ -21,7 +21,7 @@ public sealed class EquipamentoController : Controller
     }
 
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar() 
     {
         List<ListarEquipamentoViewModel> viewModels = new List<ListarEquipamentoViewModel>();
 
