@@ -1,6 +1,6 @@
 # Gestão de Equipamentos Web
 
-![Tela Inicial do Sistema](wwwroot/img/tela_inicial.png)
+![Tela Inicial do Sistema](GestaoDeEquipamentos.WebApp/wwwroot/img/tela_inicial.png)
 
 ## Projeto
 
