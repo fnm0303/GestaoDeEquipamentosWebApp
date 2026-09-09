@@ -7,7 +7,9 @@ namespace GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura;
 
 public static class InjecaoDeDependencia
 {
-    public static void AdicionarCamadaInfraEstrutura(this IServiceCollection services)
+    public static void AdicionarCamadaInfraEstrutura(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddScoped(services =>
         {
@@ -18,7 +20,13 @@ public static class InjecaoDeDependencia
             return contexto;
         });
 
-        services.AddScoped<IRepositorioFabricante, RepositorioFabricanteEmSql>();
+        string connectionString = configuration.GetConnectionString("SqlServerDocker")
+            ?? throw new InvalidOperationException("A string de conexão não foi configurada.");
+
+        services.AddScoped<IRepositorioFabricante>(_ =>
+        {
+            return new RepositorioFabricanteEmSql(connectionString);
+        });
         services.AddScoped<RepositorioEquipamentoEmArquivo>();
         services.AddScoped<RepositorioChamadosEmArquivo>();
     }

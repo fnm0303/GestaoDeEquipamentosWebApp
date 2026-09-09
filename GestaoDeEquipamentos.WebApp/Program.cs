@@ -4,7 +4,7 @@ using GestaoDeEquipamentos.WebApp.Compartilhado.Infraestrutura;
 var builder = WebApplication.CreateBuilder(args);
 
 //Configurar a INFRAESTRUTURA (arquivos, banco de dados, logs, cachês, etc..)
-builder.Services.AdicionarCamadaInfraEstrutura();
+builder.Services.AdicionarCamadaInfraEstrutura(builder.Configuration);
 
 //Configura MVC / APRESENTAÇÃO
 builder.Services.AdicionarCamadaApresentacao();
