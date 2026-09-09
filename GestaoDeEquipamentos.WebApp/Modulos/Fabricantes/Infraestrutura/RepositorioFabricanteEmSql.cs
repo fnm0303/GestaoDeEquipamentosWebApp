@@ -29,7 +29,26 @@ public sealed class RepositorioFabricanteEmSql : IRepositorioFabricante
 
     public bool Editar(int idSelecionado, Fabricante entidadeAtualizada)
     {
-        throw new NotImplementedException();
+        const string query =
+            """
+                UPDATE dbo.TBFabricantes
+                SET Nome = @Nome, 
+                    Email = @Email, 
+                    Telefone = @Telefone
+                WHERE Id = @Id
+            """;
+
+        using SqlConnection conexao = new(connectionString);
+
+        int quantidadeRegistrosAlterados = conexao.Execute(query, new
+        {
+            Id = idSelecionado,
+            Nome = entidadeAtualizada.Nome,
+            Email = entidadeAtualizada.Email,
+            Telefone = entidadeAtualizada.Telefone
+        });
+
+        return quantidadeRegistrosAlterados == 1;
     }
 
     public bool Excluir(int idSelecionado)
@@ -39,7 +58,17 @@ public sealed class RepositorioFabricanteEmSql : IRepositorioFabricante
 
     public Fabricante? SelecionarPorId(int idSelecionado)
     {
-        throw new NotImplementedException();
+        const string query =
+            """
+                SELECT Id, Nome, Email, Telefone
+                FROM dbo.TBFabricantes
+                WHERE Id = @Id
+            """;
+
+        using SqlConnection conexao = new(connectionString);
+
+        //Criação de um objeto anônimo
+        return conexao.QuerySingleOrDefault<Fabricante>(query, new { Id = idSelecionado });
     }
 
     public List<Fabricante> SelecionarTodos()
