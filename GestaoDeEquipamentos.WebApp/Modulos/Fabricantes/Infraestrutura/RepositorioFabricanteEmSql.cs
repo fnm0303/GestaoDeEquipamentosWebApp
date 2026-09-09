@@ -15,7 +15,16 @@ public sealed class RepositorioFabricanteEmSql : IRepositorioFabricante
 
     public void Cadastrar(Fabricante novoRegistro)
     {
-        throw new NotImplementedException();
+        const string query =
+            """
+                INSERT INTO dbo.TBFabricantes (Nome, Email, Telefone)
+                OUTPUT INSERTED.Id
+                VALUES (@Nome, @Email, @Telefone)
+            """;
+
+        using SqlConnection conexao = new(connectionString);
+
+        novoRegistro.Id = conexao.QuerySingle<int>(query, novoRegistro);
     }
 
     public bool Editar(int idSelecionado, Fabricante entidadeAtualizada)
