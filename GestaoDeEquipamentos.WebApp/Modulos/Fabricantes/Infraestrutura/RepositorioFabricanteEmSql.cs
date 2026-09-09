@@ -53,7 +53,17 @@ public sealed class RepositorioFabricanteEmSql : IRepositorioFabricante
 
     public bool Excluir(int idSelecionado)
     {
-        throw new NotImplementedException();
+        const string query =
+            """
+                DELETE FROM dbo.TBFabricantes
+                WHERE Id = @Id
+            """;
+
+        using SqlConnection conexao = new(connectionString);
+
+        int quantidadeRegistrosExcluidos = conexao.Execute(query, new { Id = idSelecionado });
+
+        return quantidadeRegistrosExcluidos == 1;
     }
 
     public Fabricante? SelecionarPorId(int idSelecionado)
