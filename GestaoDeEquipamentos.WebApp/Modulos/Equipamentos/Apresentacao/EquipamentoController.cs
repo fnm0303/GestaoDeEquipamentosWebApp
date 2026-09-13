@@ -8,12 +8,12 @@ namespace GestaoDeEquipamentos.WebApp.Modulos.Equipamentos.Apresentacao;
 
 public sealed class EquipamentoController : Controller
 {
-    private readonly RepositorioEquipamentoEmArquivo repositorioEquipamento;
-    private readonly RepositorioFabricanteEmArquivo repositorioFabricante;
+    private readonly IRepositorioEquipamento repositorioEquipamento;
+    private readonly IRepositorioFabricante repositorioFabricante;
 
     public EquipamentoController(
-        RepositorioEquipamentoEmArquivo repositorioEquipamento,
-        RepositorioFabricanteEmArquivo repositorioFabricante
+        IRepositorioEquipamento repositorioEquipamento,
+        IRepositorioFabricante repositorioFabricante
     )
     {
         this.repositorioEquipamento = repositorioEquipamento;
@@ -25,7 +25,9 @@ public sealed class EquipamentoController : Controller
     {
         List<ListarEquipamentoViewModel> viewModels = new List<ListarEquipamentoViewModel>();
 
-        foreach (Equipamento e in repositorioEquipamento.SelecionarTodos())
+        List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
+
+        foreach (Equipamento e in equipamentos)
         {
             ListarEquipamentoViewModel viewModel = new ListarEquipamentoViewModel(
                 e.Id,
