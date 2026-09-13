@@ -25,9 +25,7 @@ public sealed class EquipamentoController : Controller
     {
         List<ListarEquipamentoViewModel> viewModels = new List<ListarEquipamentoViewModel>();
 
-        List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
-
-        foreach (Equipamento e in equipamentos)
+        foreach (Equipamento e in repositorioEquipamento.SelecionarTodos())
         {
             ListarEquipamentoViewModel viewModel = new ListarEquipamentoViewModel(
                 e.Id,
